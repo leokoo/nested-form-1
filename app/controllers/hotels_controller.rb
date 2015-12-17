@@ -13,13 +13,15 @@ class HotelsController < ApplicationController
   end
 
   # GET /hotels/new
-  def new
-    @hotel = Hotel.new
-  end
+def new
+  @hotel = Hotel.new
+  @hotel.room_categories.build
+end
 
   # GET /hotels/1/edit
-  def edit
-  end
+def edit
+  @hotel.room_categories.build
+end
 
   # POST /hotels
   # POST /hotels.json
@@ -61,14 +63,13 @@ class HotelsController < ApplicationController
     end
   end
 
-  private
+private
     # Use callbacks to share common setup or constraints between actions.
     def set_hotel
       @hotel = Hotel.find(params[:id])
     end
-
     # Never trust parameters from the scary internet, only allow the white list through.
-    def hotel_params
-      params.require(:hotel).permit(:name)
+     def hotel_params
+      params.require(:hotel).permit(:name, room_categories_attributes: [ :id, :name, :_destroy ])
     end
 end
